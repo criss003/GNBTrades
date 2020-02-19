@@ -81,7 +81,7 @@ class GNBViewModel {
                     //
                     let resRate = results[0]
                     if let eurRate = Double(resRate.rate) {
-                        amount = amount / eurRate
+                        amount = amount * eurRate
                     }
                 } else {
                     print(GNBViewModelConstants.missingConversionRateError)
