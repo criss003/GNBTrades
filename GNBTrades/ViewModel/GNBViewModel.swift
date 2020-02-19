@@ -55,6 +55,11 @@ class GNBViewModel {
     }
     
     func totalAmount() -> String {
+        guard rates.count > 0 else {
+            print(GNBViewModelConstants.missingConversionRateError)
+            return " "
+        }
+        
         let total = transactionsList.reduce(0.0) {(result, transaction) -> Double in
             var amount = Double(transaction.amount) ?? 0.0
             if transaction.currency != GNBViewModelConstants.eur {
@@ -78,6 +83,10 @@ class GNBViewModel {
     
     private func calculateMissingRates() {
         //print("received rates: \(rates) \n****\n ")
+        
+        guard rates.count > 0 else {
+            return
+        }
         
         var currencyArray = Array(Set(rates.map({ $0.from })))
         //print("currencyArray: \(currencyArray) \n")
