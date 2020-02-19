@@ -16,6 +16,7 @@ struct GNBListViewControllerConstants {
 
 class GNBListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     let viewModel = GNBViewModel()
 
@@ -24,6 +25,9 @@ class GNBListViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         title = GNBListViewControllerConstants.title
+        
+        activityIndicatorView.startAnimating()
+        activityIndicatorView.center = view.center
         
         viewModel.delegateProducts = self
         viewModel.performModelUpdate()
@@ -35,6 +39,7 @@ extension GNBListViewController: GNBViewModelProductsDelegate {
     
     func modelUpdateDidFinish() {
         DispatchQueue.main.async {
+            self.activityIndicatorView.stopAnimating()
             self.tableView.reloadData()
         }
     }
